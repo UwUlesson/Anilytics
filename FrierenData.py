@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import getData
 
+#parametros
 myHeaders = getData.headers
 url = "https://api.myanimelist.net/v2/anime/52991"
 myParams = {
@@ -23,8 +24,19 @@ studios,statistics
 }
 """
 
+#sacar datos
 response = requests.get(url,headers=myHeaders,params=myParams)
 data = response.json()
-print(data)
 
-animeData = []
+animeData = [{
+        "ID":data["id"],
+        "Title":data["title"],
+        "Rank":data["rank"],
+        "Popularity":data["popularity"],
+        "In list":data["num_list_users"],
+        "User Score":data["num_scoring_users"]
+    }]
+
+
+table = pd.DataFrame(animeData)
+print(table)
